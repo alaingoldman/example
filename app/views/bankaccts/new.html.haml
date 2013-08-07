@@ -1,0 +1,17 @@
+/ check if they have a bank account setup if not give them this form 
+%form#bank-account-form{:action => "#", :method => "POST"}
+  = label_tag :bank_name, "Account Holder's Name"
+  = text_field_tag :bank_name, nil, name: nil, :value => "John Q. TaxPayer", class: "ba-name"
+  %p
+  = label_tag :route_num, "Routing Number"
+  = text_field_tag :route_num, nil, name: nil, :value => "121000358", class: "ba-rn"
+  %p
+  = label_tag :acct_num, "Account Number"
+  = text_field_tag :acct_num, nil, name: nil, :value => "9900000001", class: "ba-an"
+  %p
+  %button.btn{:type => "submit"}
+    tokenize
+
+
+%script{:charset => "utf-8", :type => "text/javascript"}
+  $('#bank-account-form').submit(tokenizeInstrument);

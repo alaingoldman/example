@@ -1,0 +1,15 @@
+%h1 
+  invitations
+= form_for @invitation do |f|
+  - if @invitation.errors.any?
+    .error_messages
+      %h2 Form is invalid
+      %ul
+        - for message in @invitation.errors.full_messages
+          %li
+            = message
+  %p
+    = f.label :Email
+    = f.text_field :email
+  %p.button
+    = f.submit

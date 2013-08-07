@@ -1,0 +1,15 @@
+%h1
+  List of users (
+  = @user.count
+  )
+%p
+  - @user.each do |user|
+    %p 
+      = user.name
+      %b Email
+      = user.email
+      %b User ID
+      = user.id
+      = link_to 'Show', user
+      - unless user.admin?
+        = link_to 'Delete', user, method: :delete, data: { confirm: "Are you sure?" }

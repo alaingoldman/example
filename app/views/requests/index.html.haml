@@ -1,0 +1,13 @@
+%h1
+  requests (
+  = @requests.count
+  )
+%p
+  - @requests.each do |x|
+    %p 
+      = x.email
+      %b
+        Created at:
+      = x.created_at
+      - if x.activated == false
+        = link_to 'activate', activate_requests_path(:request_id => x.id), remote: true, :class => "ajaxlink"

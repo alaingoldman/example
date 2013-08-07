@@ -1,0 +1,51 @@
+*{
+	margin:0px;
+	padding:0px; 
+}
+nav{
+	background-color:#45dde0;
+	width:100%;
+	overflow:hidden;
+	height:50px;
+	.inner{
+    	height: 100%;
+		width: 960px;
+		margin-left:auto;
+		margin-right:auto;
+		img{
+			margin-top:8px;
+			height:36px;	
+			display:inline-block;
+		}
+		#menu{
+			//background-color:#343434;
+			height:100%;
+			display:inline;
+			float:right;
+		}
+	}
+	a{
+		text-decoration:none;
+
+	}
+}
+
+.container{
+	margin-left:auto;
+	margin-right:auto;
+	width:960px;
+}
+.dosis4{
+	font-family: 'Dosis', sans-serif !important;
+	font-weight: 400;
+}
+.dosis6{
+	font-family: 'Dosis', sans-serif !important;
+	font-weight: 600;
+}
+body{
+	background-color:#ebebeb;
+}
+.image_wrap {
+	display:inline;
+}

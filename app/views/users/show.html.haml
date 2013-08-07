@@ -1,0 +1,40 @@
+- provide(:title, 'lootfly | ' +  @user.name)
+%p
+
+  %b Name
+  = @user.name
+  %br
+
+  %b Email
+  = @user.email
+  %br
+
+  %b Member since
+  = @user.created_at
+  %br
+  - if @user.admin == false
+    - if current_user.admin?
+      = link_to 'Delete this users account', @user, method: :delete, data: { confirm: "Are you sure? This will delete your account" }
+    - else
+      = link_to 'Delete your account', @user, method: :delete, data: { confirm: "Are you sure? This will delete your account" }
+  - else
+  %br
+
+  %h3
+    - if @user.admin?
+      Items this user is selling
+    - else
+      Items your selling
+
+
+
+- @products.each do |product|
+  %p
+    = product.name
+    %b
+    = link_to 'Show', product
+    = link_to 'Edit', edit_product_path(product)
+    = link_to 'Delete', product, method: :delete, data: { confirm: "Are you sure?" }
+%br
+- unless @user.admin?
+  = link_to 'Reset password', edit_user_path(@user)

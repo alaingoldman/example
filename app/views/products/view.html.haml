@@ -1,0 +1,8 @@
+%p
+  - current_user.products.each do |product|
+    %p
+    = product.name
+    %b
+      as sold by:
+    = product.user.name
+    = link_to 'Show', product

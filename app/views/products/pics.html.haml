@@ -1,0 +1,148 @@
+/ %form#credit-card-form{:action => "#", :method => "POST"}
+/   = label_tag :card_number, "Credit Card Number"
+/   = text_field_tag :card_number, nil, name: nil, :value => "4111111111111111", class: "cc-number"
+/   %p
+/   = label_tag :card_code, "Security Code on Card (CVV)"
+/   = text_field_tag :card_code, nil, name: nil, :value => "123", class: "cc-csc"
+/   %p
+/   = label_tag :card_month, "Card Expiration"
+/   = select_month nil, {add_month_numbers: true}, {name: nil, class: "cc-em"}
+/   = select_year Date.new(2020), {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, class: "cc-ey"}
+/   %p
+/   %button.btn{:type => "submit"}
+/     tokenize
+
+
+/ check if they have a bank account setup if not give them this form 
+%form#bank-account-form{:action => "#", :method => "POST"}
+  = label_tag :bank_name, "Account Holder's Name"
+  = text_field_tag :bank_name, nil, name: nil, :value => "John Q. TaxPayer", class: "ba-name"
+  %p
+  = label_tag :route_num, "Routing Number"
+  = text_field_tag :route_num, nil, name: nil, :value => "121000358", class: "ba-rn"
+  %p
+  = label_tag :acct_num, "Account Number"
+  = text_field_tag :acct_num, nil, name: nil, :value => "9900000001", class: "ba-an"
+  %p
+  %button.btn{:type => "submit"}
+    tokenize
+
+
+
+/ = form_for :transaction do |f|
+/   = label_tag :card_number, "Credit Card Number"
+/   = text_field_tag :card_number, nil, name: nil, :value => "4111111111111111", class: "cc-number"
+/   %p
+/   = label_tag :card_code, "Security Code on Card (CVV)"
+/   = text_field_tag :card_code, nil, name: nil, :value => "123", class: "cc-csc"
+/   %p
+/   = label_tag :card_month, "Card Expiration"
+/   = select_month nil, {add_month_numbers: true}, {name: nil, class: "cc-em"}
+/   = select_year Date.new(2020), {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, class: "cc-ey"}
+/   %br
+/   = f.submit
+
+
+/ %script{:charset => "utf-8", :type => "text/javascript"}
+/   var requestBinURL = '';
+/   var marketplaceUri = '/v1/marketplaces/TEST-MP14cA2j6MUgRmI2u6tskpIs';
+/   balanced.init(marketplaceUri);
+/   function responseCallbackHandler(response) {
+/   switch (response.status) {
+/   case 400:
+/   // missing or invalid field - check response.error for details
+/   console.log(response.error);
+/   break;
+/   case 404:
+/   // your marketplace URI is incorrect
+/   console.log(response.error);
+/   console.log("marketplace uri is incorrect")
+/   break;
+/   case 201:
+/   // WOO HOO! MONEY!
+/   // response.data.uri == URI of the bank account resource you
+/   // should store this bank account URI to later credit it
+/   console.log(response.data);
+/   var $form = $("#credit-card-form");
+/   // the uri is an opaque token referencing the tokenized bank account
+/   var cardTokenURI = response.data['uri'];
+/   // append the token as a hidden field to submit to the server
+/   $('<input>').attr({
+/   type: 'hidden',
+/   value: cardTokenURI,
+/   name: 'balancedCreditCardURI'
+/   }).appendTo($form);
+/   $form.attr({action: requestBinURL});
+/   $form.get(0).submit();
+/   }
+/   }
+/   var tokenizeInstrument = function(e) {
+/   e.preventDefault(); 
+/   var $form = $('#credit-card-form');
+/   var creditCardData = {
+/   card_number: $form.find('.cc-number').val(),
+/   expiration_month: $form.find('.cc-em').val(),
+/   expiration_year: $form.find('.cc-ey').val(),
+/   security_code: $form.find('cc-csc').val()
+/   };
+/   balanced.card.create(creditCardData, responseCallbackHandler);
+/   };
+/   $('#credit-card-form').submit(tokenizeInstrument);
+
+%script{:charset => "utf-8", :type => "text/javascript"}
+  \// FOR DEMONSTRATION PURPOSES ONLY - if you already have a server you can POST to, replace
+  \//                                   the URL with the URL to post to.
+  \// go to http://requestb.in/
+  \// click create new request bin and COPY that URL without the ?inspect at the end
+  var requestBinURL = 'http://requestb.in/1hkphb71';  // make sure it doesn't end in ?inspect
+  
+  var marketplaceUri = '/v1/marketplaces/TEST-MPg9bCIQUZMBoiPMnvWkQJW';
+  balanced.init(marketplaceUri);
+  
+  function responseCallbackHandler(response) {
+  switch (response.status) {
+  case 400:
+  \// missing or invalid field - check response.error for details
+  console.log(response.error);
+  break;
+  case 404:
+  \// your marketplace URI is incorrect
+  console.log(response.error);
+  break;
+  case 201:
+  
+  / \// WOO HOO! MONEY!
+  / \// response.data.uri == URI of the bank account resource you
+  / \// should store this bank account URI to later credit it
+  / console.log(response.data);
+  / var $form = $("#bank-account-form");
+  / \// the uri is an opaque token referencing the tokenized bank account
+  / var bank_account_uri = response.data['uri'];
+  / \// append the token as a hidden field to submit to the server
+  / $('
+  / %input>/
+  / ').attr({
+  / type: 'hidden',
+  / value: bank_account_uri,
+  / name: 'balancedBankAccountURI'
+  / }).appendTo($form);
+  / $form.attr({action: requestBinURL});
+  / $form.get(0).submit();
+  }
+  }
+  
+  var tokenizeInstrument = function(e) {
+  e.preventDefault();
+  
+  var $form = $('#bank-account-form');
+  var bankAccountData = {
+  name: $form.find('.ba-name').val(),
+  account_number: $form.find('.ba-an').val(),
+  bank_code: $form.find('.ba-rn').val(),
+  type: $form.find('select').val()
+  };
+  
+  
+  balanced.bankAccount.create(bankAccountData, responseCallbackHandler);
+  };
+  $('#bank-account-form').submit(tokenizeInstrument);

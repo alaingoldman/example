@@ -1,0 +1,15 @@
+%h1
+  List of invitations (
+  = @invitations.count
+  )
+  
+- @invitations.each do |x|
+  %p
+    = User.find_by_id(x.user_id).email
+    %b 
+      invited
+    = x.email
+    - unless x.accepted_at == nil
+      %b
+        accepted at
+      = x.accepted_at
